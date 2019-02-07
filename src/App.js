@@ -8,8 +8,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+<<<<<<< HEAD
           <p syle={pstyle}>
             Edit <code>src/App.js</code> and save to reload.
+=======
+          <p>
+            Welcome to self care station
+>>>>>>> d3c96d194665ea8fded5ac9e676675c2743005d8
           </p>
           <a
             className="App-link"
