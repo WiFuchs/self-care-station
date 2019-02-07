@@ -8,7 +8,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
+          <p syle={pstyle}>
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <a
@@ -24,5 +24,7 @@ class App extends Component {
     );
   }
 }
-
+const pstyle = {
+  backgroundColor: "#F00"
+}
 export default App;
