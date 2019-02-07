@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -8,14 +8,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-<<<<<<< HEAD
-          <p syle={pstyle}>
-            Edit <code>src/App.js</code> and save to reload.
-=======
-          <p>
-            Welcome to self care station
->>>>>>> d3c96d194665ea8fded5ac9e676675c2743005d8
-          </p>
+          <p>Welcome to self care station</p>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -31,5 +24,5 @@ class App extends Component {
 }
 const pstyle = {
   backgroundColor: "#F00"
-}
+};
 export default App;
