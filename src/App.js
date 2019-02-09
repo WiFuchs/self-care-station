@@ -1,28 +1,61 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import HeaderBar from "./components/layout/HeaderBar";
 import "./App.css";
+import PodCat from "./components/PodCat";
+import Footer from "./components/layout/Footer";
 
 class App extends Component {
+  state = {
+    podcasts: [
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      }
+    ]
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Welcome to self care station</p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <HeaderBar />
+        <PodCat podcasts={this.state.podcasts} />
+        <PodCat podcasts={this.state.podcasts} />
+        <PodCat podcasts={this.state.podcasts} />
+        <Footer />
       </div>
     );
   }
 }
-const pstyle = {
-  backgroundColor: "#F00"
-};
+
 export default App;
