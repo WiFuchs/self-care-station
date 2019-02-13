@@ -1,25 +1,66 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import HeaderBar from "./components/layout/HeaderBar";
+import "./App.css";
+import PodCat from "./components/PodCat";
+import Footer from "./components/layout/Footer";
 
 class App extends Component {
+  state = {
+    podcasts: [
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      },
+      {
+        id: 1,
+        title: "avila",
+        cat: "visualizations"
+      }
+    ]
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Welcome to self care station
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <HeaderBar />
+        <PodCat podcasts={this.state.podcasts} />
+        <iframe
+          src="https://drive.google.com/drive/folders/16eSyuz-mgDVpGo_7sL65jaK8v-e_vMYN?usp=sharing"
+          width="500"
+          title="testVis"
+          height="30"
+          frameborder="0"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          allowfullscreen
+        />
+        <Footer />
       </div>
     );
   }
