@@ -10,10 +10,11 @@ class App extends Component {
   state = {
     categories: []
   };
-  componentDidMount = () => {
+  componentWillMount = () => {
     gapi.client
       .init({
-        apiKey: process.env.GOOGLE_DRIVE_API_KEY,
+        apiKey: process.env.REACT_APP_GOOGLE_DRIVE_API_KEY,
+        clientId: process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID,
         discoveryDocs: [
           "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
         ]
