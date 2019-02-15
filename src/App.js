@@ -13,7 +13,7 @@ class App extends Component {
   componentDidMount = () => {
     gapi.client
       .init({
-        apiKey: "AIzaSyCwLdCTLdu_dtttAJOpi1Ii2Mll4w0_gGM",
+        apiKey: process.env.GOOGLE_DRIVE_API_KEY,
         discoveryDocs: [
           "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
         ]
