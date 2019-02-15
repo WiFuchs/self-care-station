@@ -1,3 +1,5 @@
+/* global gapi */
+
 import React, { Component } from "react";
 import HeaderBar from "./components/layout/HeaderBar";
 import "./App.css";
@@ -6,60 +8,31 @@ import Footer from "./components/layout/Footer";
 
 class App extends Component {
   state = {
-    podcasts: [
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      },
-      {
-        id: 1,
-        title: "avila",
-        cat: "visualizations"
-      }
-    ]
+    categories: []
+  };
+  componentDidMount = () => {
+    gapi.client
+      .init({
+        apiKey: "AIzaSyCwLdCTLdu_dtttAJOpi1Ii2Mll4w0_gGM",
+        discoveryDocs: [
+          "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
+        ]
+      })
+      .then(function() {
+        return gapi.client.drive.files.list({
+          q: "'16eSyuz-mgDVpGo_7sL65jaK8v-e_vMYN' in parents"
+        });
+      })
+      .then(response => this.setState({ categories: response.result.files }));
   };
 
   render() {
     return (
       <div className="App">
         <HeaderBar />
-        <PodCat podcasts={this.state.podcasts} />
-        <iframe
-          src="https://drive.google.com/drive/folders/16eSyuz-mgDVpGo_7sL65jaK8v-e_vMYN?usp=sharing"
-          width="500"
-          title="testVis"
-          height="30"
-          frameborder="0"
-          webkitallowfullscreen="true"
-          mozallowfullscreen="true"
-          allowfullscreen
-        />
+        {this.state.categories.map(cat => (
+          <PodCat category={cat} />
+        ))}
         <Footer />
       </div>
     );

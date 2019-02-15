@@ -34,7 +34,8 @@ const footerStyle = {
   padding: "10px",
   textAlign: "center",
   width: "100%",
-  color: "#F7C331"
+  color: "#F7C331",
+  height: "4em"
 };
 
 export default Footer;
