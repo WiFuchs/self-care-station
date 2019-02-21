@@ -1,30 +1,55 @@
-/* global gapi */
-
 import React, { Component } from "react";
 import HeaderBar from "./components/layout/HeaderBar";
 import "./App.css";
 import PodCat from "./components/PodCat";
-import Footer from "./components/layout/Footer";
+import AudioPlayer from "./components/AudioPlayer";
 
 class App extends Component {
   state = {
-    categories: []
+    categories: [],
+    currentPodcast: "",
+    podcastURL:
+      "https://www.dropbox.com/s/k8q2wqewst8debh/Simple%20Song%20Strum.m4a?dl=1"
   };
+
+  selectPodcast = podcast => {
+    var self = this;
+    window.dbx
+      .sharingListSharedLinks({
+        path: podcast.path_lower,
+        direct_only: true
+      })
+      .then(response => {
+        if (response.links.length) {
+          var url = response.links[0].url.replace(/.$/, "1");
+
+          self.setState({ podcastURL: url });
+        } else {
+          window.dbx
+            .sharingCreateSharedLinkWithSettings({ path: podcast.path_lower })
+            .then(response => {
+              var url = response.url.replace(/.$/, "1");
+              self.setState({ podcastURL: url });
+            });
+        }
+      });
+  };
+
   componentWillMount = () => {
-    gapi.client
-      .init({
-        apiKey: process.env.REACT_APP_GOOGLE_DRIVE_API_KEY,
-        clientId: process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID,
-        discoveryDocs: [
-          "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
-        ]
+    var fetch = require("isomorphic-fetch");
+    var Dropbox = require("dropbox").Dropbox;
+    window.dbx = new Dropbox({
+      accessToken: process.env.REACT_APP_DBX_TOKEN,
+      fetch: fetch
+    });
+    window.dbx
+      .filesListFolder({ path: "" })
+      .then(response => {
+        this.setState({ categories: response.entries });
       })
-      .then(function() {
-        return gapi.client.drive.files.list({
-          q: "'16eSyuz-mgDVpGo_7sL65jaK8v-e_vMYN' in parents"
-        });
-      })
-      .then(response => this.setState({ categories: response.result.files }));
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   render() {
@@ -32,9 +57,13 @@ class App extends Component {
       <div className="App">
         <HeaderBar />
         {this.state.categories.map(cat => (
-          <PodCat category={cat} />
+          <PodCat
+            key={cat.id}
+            category={cat}
+            selectPodcast={this.selectPodcast}
+          />
         ))}
-        <Footer />
+        <AudioPlayer source={this.state.podcastURL} />
       </div>
     );
   }

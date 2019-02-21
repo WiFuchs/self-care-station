@@ -1,5 +1,3 @@
-/* global gapi */
-
 import React, { Component } from "react";
 import Podcast from "./Podcast";
 import PropTypes from "prop-types";
@@ -14,12 +12,14 @@ export class PodCat extends Component {
   }
 
   getPodcasts = () => {
-    var request = gapi.client.drive.files.list({
-      q: "'" + this.props.category.id + "' in parents"
-    });
-    request.execute(resp => {
-      this.setState({ podcasts: resp.result.files });
-    });
+    window.dbx
+      .filesListFolder({ path: this.props.category.path_lower })
+      .then(response => {
+        this.setState({ podcasts: response.entries });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -28,7 +28,11 @@ export class PodCat extends Component {
         <h3 style={catHeaderStyle}>{this.props.category.name}</h3>
         <div style={podCatStyle}>
           {this.state.podcasts.map(podcast => (
-            <Podcast podcast={podcast} />
+            <Podcast
+              key={podcast.id}
+              podcast={podcast}
+              selectPodcast={this.props.selectPodcast}
+            />
           ))}
         </div>
       </div>
@@ -49,7 +53,8 @@ const podCatStyle = {
 };
 
 PodCat.propTypes = {
-  category: PropTypes.object.isRequired
+  category: PropTypes.object.isRequired,
+  selectPodcast: PropTypes.func.isRequired
 };
 
 export default PodCat;
