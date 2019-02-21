@@ -39,7 +39,7 @@ export class AudioPlayer extends Component {
       <div style={footerStyle}>
         <ProgressBar percentage={this.state.percentage} />
         <div style={audioPlayer}>
-          <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage}>
+          <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage} autoPlay>
             <source src={this.props.source} type="audio/mpeg" />
           </audio>
           <FeatherIcon icon="skip-back" className="clickable" />

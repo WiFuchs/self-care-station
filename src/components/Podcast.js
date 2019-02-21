@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FeatherIcon from "feather-icons-react";
+import { isAbsolute } from "path";
 
 export class Podcast extends Component {
   state = {
@@ -16,20 +17,33 @@ export class Podcast extends Component {
     return (
       <div style={podcastStyle} onClick={this.selectPodcast}>
         <p>{this.props.podcast.name.split(".")[0]}</p>
-        <FeatherIcon icon="play-circle" />
+        <FeatherIcon
+          className="clickable"
+          icon="play-circle"
+          size="64"
+          style={bottom}
+        />
       </div>
     );
   }
 }
 
 const podcastStyle = {
+  position: "relative",
+  width: "8em",
+  height: "8em",
   minWidth: "8em",
-  minHeight: "8em",
   backgroundColor: "#6B7A8F",
   margin: "5px",
   color: "#F7882F",
   maxWidth: "10em",
   padding: "10px"
+};
+
+const bottom = {
+  position: "absolute",
+  bottom: "1em",
+  left: "2.5em"
 };
 
 Podcast.propTypes = {

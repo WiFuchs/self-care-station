@@ -49,7 +49,7 @@ const podCatStyle = {
   display: "flex",
   justifyContent: "center",
   width: "100%",
-  overflowX: "scroll"
+  overflowX: "auto"
 };
 
 PodCat.propTypes = {
