@@ -29,13 +29,13 @@ export class AudioPlayer extends Component {
     if (prevProps.source !== this.props.source) {
       var player = document.getElementById("podcastPlayer");
       player.load();
+      this.setState({ status: "pause-circle" });
       player.play();
     }
   }
 
   componentDidMount() {
     var player = document.getElementById("podcastPlayer");
-    player.load();
     player.play();
   }
 
@@ -44,7 +44,7 @@ export class AudioPlayer extends Component {
       <div style={footerStyle}>
         <ProgressBar percentage={this.state.percentage} />
         <div style={audioPlayer}>
-          <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage} autoPlay>
+          <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage}>
             <source src={this.props.source} type="audio/mpeg" />
           </audio>
           <FeatherIcon
@@ -70,11 +70,11 @@ const audioPlayer = {
 const footerStyle = {
   position: "fixed",
   bottom: "0px",
-  backgroundColor: "#6B7A8F",
+  backgroundColor: "#609694",
   padding: "0px",
   textAlign: "center",
   width: "100%",
-  color: "#F7C331",
+  color: "#ffd7cc",
   height: "4em"
 };
 

@@ -6,6 +6,17 @@ export class Podcast extends Component {
   state = {
     selected: false
   };
+  podcastStyle = {
+    position: "relative",
+    width: "8em",
+    height: "8em",
+    minWidth: "8em",
+    margin: "5px",
+    color: "#f7714c",
+    maxWidth: "10em",
+    padding: "10px",
+    backgroundColor: this.props.color
+  };
 
   selectPodcast = () => {
     this.props.selectPodcast(this.props.podcast);
@@ -14,7 +25,7 @@ export class Podcast extends Component {
 
   render() {
     return (
-      <div style={podcastStyle} onClick={this.selectPodcast}>
+      <div style={this.podcastStyle} onClick={this.selectPodcast}>
         <p>{this.props.podcast.name.split(".")[0]}</p>
         <FeatherIcon
           className="clickable"
@@ -26,18 +37,6 @@ export class Podcast extends Component {
     );
   }
 }
-
-const podcastStyle = {
-  position: "relative",
-  width: "8em",
-  height: "8em",
-  minWidth: "8em",
-  backgroundColor: "#6B7A8F",
-  margin: "5px",
-  color: "#F7882F",
-  maxWidth: "10em",
-  padding: "10px"
-};
 
 const bottom = {
   position: "absolute",

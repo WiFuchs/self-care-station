@@ -72,7 +72,11 @@ class App extends Component {
             sidebar={sidebarContent}
             open={this.state.sidebarOpen}
             onSetOpen={this.onSetSidebarOpen}
-            styles={{ sidebar: { background: "white", padding: "1em" } }}
+            styles={{
+              sidebar: {
+                background: "#dee7ed"
+              }
+            }}
           >
             <HeaderBar onSetSidebarOpen={this.onSetSidebarOpen} />
 
@@ -110,6 +114,12 @@ const sidebarContent = (
     <NavLink className="navLink" activeClassName="navLinkActive" to="/about">
       About
     </NavLink>
+    <a className="navLink" href="https://www.instagram.com/calpolypulse/">
+      Upcoming Events
+    </a>
+    <a className="navLink" href="tel:+1-805-756-6181">
+      805.756.6181
+    </a>
   </React.Fragment>
 );
 

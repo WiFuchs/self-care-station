@@ -26,9 +26,7 @@ export class About extends Component {
   render() {
     return (
       <div className="content">
-        <h1>
-          <a href="tel:+1-805-756-6181">(805)-756-6181</a>
-        </h1>
+        <h1>Meet the PULSE team!</h1>
 
         <ReactMarkdown source={this.state.markdown} />
       </div>

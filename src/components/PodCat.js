@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Podcast from "./Podcast";
 import PropTypes from "prop-types";
+import "./../App.css";
+
+const colors = ["#FFCEC0", "#B4D8EB", "#DCFABC", "#B4EFCF"];
 
 export class PodCat extends Component {
   state = {
@@ -24,14 +27,15 @@ export class PodCat extends Component {
 
   render() {
     return (
-      <div style={{ marginBottom: "1em" }}>
-        <h3 style={catHeaderStyle}>{this.props.category.name}</h3>
-        <div style={podCatStyle}>
-          {this.state.podcasts.map(podcast => (
+      <div className="podCatContainer">
+        <h3>{this.props.category.name}</h3>
+        <div className="podCat">
+          {this.state.podcasts.map((podcast, index) => (
             <Podcast
               key={podcast.id}
               podcast={podcast}
               selectPodcast={this.props.selectPodcast}
+              color={colors[index % 4]}
             />
           ))}
         </div>
@@ -39,18 +43,6 @@ export class PodCat extends Component {
     );
   }
 }
-
-const catHeaderStyle = {
-  fontWeight: "bold",
-  color: "#F7882F"
-};
-
-const podCatStyle = {
-  display: "flex",
-  justifyContent: "center",
-  width: "100%",
-  overflowX: "auto"
-};
 
 PodCat.propTypes = {
   category: PropTypes.object.isRequired,
