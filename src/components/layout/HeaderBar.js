@@ -1,10 +1,14 @@
 import React from "react";
 import FeatherIcon from "feather-icons-react";
 
-function HeaderBar() {
+function HeaderBar(props) {
   return (
     <div style={headerBarStyle}>
-      <FeatherIcon icon="menu" style={{ paddingLeft: "1em" }} />
+      <FeatherIcon
+        icon="menu"
+        style={{ paddingLeft: "1em" }}
+        onClick={() => props.onSetSidebarOpen(true)}
+      />
       <h2>Self-Care Station</h2>
       <FeatherIcon icon="search" style={{ paddingRight: "1em" }} />
     </div>

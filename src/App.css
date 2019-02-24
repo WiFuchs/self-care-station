@@ -21,6 +21,16 @@ html::-webkit-scrollbar {
   text-align: center;
 }
 
+.content {
+  width: 80%;
+}
+
+h1 {
+  color: #F7882F;
+  font-weight: bolder;
+  margin-bottom: 1em;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -38,4 +48,39 @@ html::-webkit-scrollbar {
   top: 0;
   bottom: 0;
   background-color: #F7C331;
+}
+
+.mainNav h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.navLink {
+  display: block;
+  padding: 10px;
+  width: 100%;
+  text-decoration: none;
+  background-color: #FFFFFF;
+}
+
+.navLinkActive {
+  background-color: rgb(218, 211, 202);
+  color: #F7882F;
+  font-weight: bold;
+}
+
+ul {
+  display: flex;
+  justify-content: left;
+  width: 80%;
+  margin-left: 10%;
+  overflow-x: auto;
+}
+
+ul li {
+  display: inline-block;
+  min-width: 30em;
+  background-color: #F00;
+  margin-right: 1em;
+  padding: 0.5em;
 }
