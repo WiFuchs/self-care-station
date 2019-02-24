@@ -6,7 +6,7 @@ import "./../App.css";
 export class AudioPlayer extends Component {
   state = {
     status: "pause-circle",
-    percentage: 25
+    percentage: 0
   };
 
   togglePlay = () => {
@@ -28,10 +28,15 @@ export class AudioPlayer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.source !== this.props.source) {
       var player = document.getElementById("podcastPlayer");
-      player.currentTime = 0;
       player.load();
       player.play();
     }
+  }
+
+  componentDidMount() {
+    var player = document.getElementById("podcastPlayer");
+    player.load();
+    player.play();
   }
 
   render() {
@@ -42,7 +47,6 @@ export class AudioPlayer extends Component {
           <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage} autoPlay>
             <source src={this.props.source} type="audio/mpeg" />
           </audio>
-          <FeatherIcon icon="skip-back" className="clickable" />
           <FeatherIcon
             icon={this.state.status}
             size="48"
@@ -50,7 +54,6 @@ export class AudioPlayer extends Component {
             className="clickable"
             onClick={this.togglePlay}
           />
-          <FeatherIcon icon="skip-forward" className="clickable" />
         </div>
       </div>
     );

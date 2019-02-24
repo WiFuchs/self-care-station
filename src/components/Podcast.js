@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FeatherIcon from "feather-icons-react";
-import { isAbsolute } from "path";
 
 export class Podcast extends Component {
   state = {
