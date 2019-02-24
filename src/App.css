@@ -6,7 +6,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  background-color: rgb(218, 211, 202);
+  background-color: #f9eff8;
   color: #FFF;
   font-family: 'Comfortaa';
   font-size: 12pt;
@@ -23,10 +23,11 @@ html::-webkit-scrollbar {
 
 .content {
   width: 80%;
+  margin-left: 10%;
 }
 
 h1 {
-  color: #F7882F;
+  color: #f7714c;
   font-weight: bolder;
   margin-bottom: 1em;
 }
@@ -47,7 +48,7 @@ h1 {
   position: absolute;
   top: 0;
   bottom: 0;
-  background-color: #F7C331;
+  background-color: #c38d9e;
 }
 
 .mainNav h1 {
@@ -59,8 +60,18 @@ h1 {
   display: block;
   padding: 10px;
   width: 100%;
+  padding: 0.5em 1.5em 0.5em 0;
+  color: #99586d;
   text-decoration: none;
-  background-color: #FFFFFF;
+  background-color: none;
+}
+
+.navLink:visited {
+  color: #99586d;
+}
+
+.navLinkActive:visited {
+  color: #f7714c;
 }
 
 .navLinkActive {
@@ -69,18 +80,57 @@ h1 {
   font-weight: bold;
 }
 
-ul {
+.content ul {
   display: flex;
   justify-content: left;
-  width: 80%;
-  margin-left: 10%;
   overflow-x: auto;
 }
 
-ul li {
+.content ul li {
   display: inline-block;
   min-width: 30em;
-  background-color: #F00;
+  background-color: #dee7ed;
+  color: #f7714c;
   margin-right: 1em;
-  padding: 0.5em;
+  padding: 1em;
+}
+
+.content ul li h2 {
+  font-size: 2em;
+}
+
+.podCatContainer {
+  margin-bottom: 1em;
+}
+
+.podCatContainer h3 {
+  color: #f7714c;
+}
+
+.podCat {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) {
+  .content {
+    width: 100vw;
+    margin-left: 0em;
+  }
+
+  .content ul {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+  }
+
+  .content ul li {
+    display: block;
+    margin-bottom: 1em;
+    min-width: 0;
+    margin-right: 0;
+  }
 }
