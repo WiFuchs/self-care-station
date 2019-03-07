@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import "./../App.css";
 
-const input = "# header here!\n\nand paragraph here!";
-
 export class About extends Component {
   state = {
     markdown: ""

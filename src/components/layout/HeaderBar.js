@@ -20,11 +20,15 @@ function HeaderBar(props) {
 }
 
 const headerBarStyle = {
+  position: "fixed",
+  top: "0",
+  zIndex: "4",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  backgroundColor: "#609694",
-  color: "#ffd7cc",
+  backgroundColor: "#9ACDE0",
+  height: "4em",
+  color: "#FFF",
   width: "100%"
 };
 
