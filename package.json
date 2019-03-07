@@ -8,6 +8,7 @@
     "feather-icons-react": "^0.3.0",
     "googleapis": "^27.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "now": "^14.0.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-markdown": "^4.0.6",
