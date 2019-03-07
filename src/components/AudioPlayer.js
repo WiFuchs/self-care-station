@@ -4,19 +4,20 @@ import ProgressBar from "./ProgressBar";
 import "./../App.css";
 
 export class AudioPlayer extends Component {
-  state = {
-    status: "pause-circle",
-    percentage: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: "play-circle",
+      percentage: 0
+    };
+  }
 
-  togglePlay = () => {
+  togglePlay = e => {
     var player = document.getElementById("podcastPlayer");
-    if (this.state.status === "play-circle") {
-      this.setState({ status: "pause-circle" });
-      player.play();
-    } else {
-      this.setState({ status: "play-circle" });
+    if (this.state.status === "pause-circle") {
       player.pause();
+    } else {
+      player.play();
     }
   };
 
@@ -25,35 +26,57 @@ export class AudioPlayer extends Component {
     this.setState({ percentage: (player.currentTime / player.duration) * 100 });
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.source !== this.props.source) {
-      var player = document.getElementById("podcastPlayer");
-      player.load();
-      this.setState({ status: "pause-circle" });
-      player.play();
-    }
-  }
+  setPlaying = stat => {
+    this.setState({ status: stat });
+  };
 
   componentDidMount() {
     var player = document.getElementById("podcastPlayer");
-    player.play();
+    player.onplaying = () => {
+      this.setState({ status: "pause-circle" });
+    };
+    player.onpause = () => {
+      this.setState({ status: "play-circle" });
+    };
   }
+
+  audioCanPlay = () => {
+    this.setState({ status: "play-circle" });
+  };
+
+  audioLoading = () => {
+    this.setState({ status: "loader" });
+  };
 
   render() {
     return (
-      <div style={footerStyle}>
+      <div id="footer" style={footerStyle} className={this.props.hidden}>
         <ProgressBar percentage={this.state.percentage} />
         <div style={audioPlayer}>
-          <audio id="podcastPlayer" onTimeUpdate={this.calcPercentage}>
-            <source src={this.props.source} type="audio/mpeg" />
-          </audio>
+          <audio
+            id="podcastPlayer"
+            onTimeUpdate={this.calcPercentage}
+            onCanPlay={this.audioCanPlay}
+            onLoadStart={this.audioLoading}
+            src="https://www.dropbox.com/s/jxx03ipc23xfhx5/Introduction%20Podcast.mp3?dl=1"
+          />
           <FeatherIcon
+            id="statusIcon"
             icon={this.state.status}
             size="48"
             style={{ padding: "5px" }}
-            className="clickable"
+            className={`${this.state.status} clickable`}
             onClick={this.togglePlay}
           />
+          <p
+            style={{
+              marginTop: "0",
+              fontStyle: "italic",
+              fontWeight: "bold"
+            }}
+          >
+            {this.props.currentPodcast}
+          </p>
         </div>
       </div>
     );
@@ -61,21 +84,22 @@ export class AudioPlayer extends Component {
 }
 
 const audioPlayer = {
-  display: "flex",
+  display: "block",
   justifyContent: "center",
   alignItems: "center",
-  width: "100%"
+  flexDirection: "column"
 };
 
 const footerStyle = {
   position: "fixed",
   bottom: "0px",
-  backgroundColor: "#609694",
+  zIndex: "4",
+  backgroundColor: "#9ACDE0",
   padding: "0px",
   textAlign: "center",
   width: "100%",
-  color: "#ffd7cc",
-  height: "4em"
+  height: "6em",
+  color: "#FFF"
 };
 
 export default AudioPlayer;

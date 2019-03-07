@@ -35,7 +35,7 @@ export class PodCat extends Component {
               key={podcast.id}
               podcast={podcast}
               selectPodcast={this.props.selectPodcast}
-              color={colors[index % 4]}
+              color={colors[Math.floor(Math.random() * 4)]}
             />
           ))}
         </div>
@@ -45,8 +45,7 @@ export class PodCat extends Component {
 }
 
 PodCat.propTypes = {
-  category: PropTypes.object.isRequired,
-  selectPodcast: PropTypes.func.isRequired
+  category: PropTypes.object.isRequired
 };
 
 export default PodCat;

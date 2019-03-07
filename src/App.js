@@ -6,16 +6,16 @@ import AudioPlayer from "./components/AudioPlayer";
 import Sidebar from "react-sidebar";
 import About from "./components/About";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Intro from "./components/Intro";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hidePlayer: "hidden",
+      currentPodcast: "Introduction Podcast",
       sidebarOpen: false,
-      categories: [],
-      currentPodcast: "",
-      podcastURL:
-        "https://www.dropbox.com/s/n2o4t86qxvtemqp/Introduction%20Podcast.mp3?dl=1"
+      categories: []
     };
   }
 
@@ -23,28 +23,11 @@ class App extends Component {
     this.setState({ sidebarOpen: open });
   };
 
-  selectPodcast = podcast => {
-    var self = this;
-    self.setState({ currentPodcast: podcast });
-    window.dbx
-      .sharingListSharedLinks({
-        path: podcast.path_lower,
-        direct_only: true
-      })
-      .then(response => {
-        if (response.links.length) {
-          var url = response.links[0].url.replace(/.$/, "1");
-
-          self.setState({ podcastURL: url });
-        } else {
-          window.dbx
-            .sharingCreateSharedLinkWithSettings({ path: podcast.path_lower })
-            .then(response => {
-              var url = response.url.replace(/.$/, "1");
-              self.setState({ podcastURL: url });
-            });
-        }
-      });
+  playIntro = play => {
+    this.setState({ hidePlayer: "" });
+    if (play) {
+      document.getElementById("podcastPlayer").play();
+    }
   };
 
   componentWillMount = () => {
@@ -64,42 +47,75 @@ class App extends Component {
       });
   };
 
+  selectPodcast = podcast => {
+    this.setState({ currentPodcast: podcast });
+  };
+
+  showAudio = () => {
+    if (this.state.hidePlayer == "hidden") {
+      this.setState({ hidePlayer: "visible" });
+    }
+  };
+
   render() {
     return (
       <Router>
         <div className="App">
+          <HeaderBar onSetSidebarOpen={this.onSetSidebarOpen} />
           <Sidebar
             sidebar={sidebarContent}
             open={this.state.sidebarOpen}
             onSetOpen={this.onSetSidebarOpen}
             styles={{
               sidebar: {
+                top: "4em",
                 background: "#dee7ed"
+              },
+              content: {
+                top: "4em",
+                bottom: "6em",
+                overflowY: "scroll"
               }
             }}
           >
-            <HeaderBar onSetSidebarOpen={this.onSetSidebarOpen} />
-
             <Route
               exact
               path="/"
-              render={props => (
-                <React.Fragment>
-                  <h1>Welcome to the Self-Care Station!</h1>
-                  {this.state.categories.map(cat => (
-                    <PodCat
-                      key={cat.id}
-                      category={cat}
-                      selectPodcast={this.selectPodcast}
-                    />
-                  ))}
-                </React.Fragment>
-              )}
+              render={() => {
+                return <Intro playIntro={this.playIntro} />;
+              }}
             />
-            <Route path="/about" component={About} />
 
-            <AudioPlayer source={this.state.podcastURL} />
+            <Route
+              path="/home"
+              render={props => {
+                this.showAudio();
+                return (
+                  <div className="content">
+                    <h1>Welcome to the Self-Care Station!</h1>
+                    {this.state.categories.map(cat => (
+                      <PodCat
+                        key={cat.id}
+                        category={cat}
+                        selectPodcast={this.selectPodcast}
+                      />
+                    ))}
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/about"
+              render={() => {
+                this.showAudio();
+                return <About />;
+              }}
+            />
           </Sidebar>
+          <AudioPlayer
+            hidden={this.state.hidePlayer}
+            currentPodcast={this.state.currentPodcast}
+          />
         </div>
       </Router>
     );
@@ -108,11 +124,11 @@ class App extends Component {
 
 const sidebarContent = (
   <React.Fragment>
-    <NavLink className="navLink mainNav" to="/">
+    <NavLink className="navLink mainNav" to="/home">
       <h1>Self Care Station</h1>
     </NavLink>
     <NavLink className="navLink" activeClassName="navLinkActive" to="/about">
-      About
+      Meet the Team
     </NavLink>
     <a className="navLink" href="https://www.instagram.com/calpolypulse/">
       Upcoming Events

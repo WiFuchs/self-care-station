@@ -3,29 +3,55 @@ import PropTypes from "prop-types";
 import FeatherIcon from "feather-icons-react";
 
 export class Podcast extends Component {
-  state = {
-    selected: false
-  };
-  podcastStyle = {
-    position: "relative",
-    width: "8em",
-    height: "8em",
-    minWidth: "8em",
-    margin: "5px",
-    color: "#f7714c",
-    maxWidth: "10em",
-    padding: "10px",
-    backgroundColor: this.props.color
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+      streamURL: ""
+    };
+    this.getURL(this.props.podcast);
+  }
+
+  selectPodcast = e => {
+    var player = document.getElementById("podcastPlayer");
+    player.src = this.state.streamURL;
+    player.load();
+    player.play();
+    this.setState({ selected: true });
+    this.props.selectPodcast(this.props.podcast.name.split(".")[0]);
   };
 
-  selectPodcast = () => {
-    this.props.selectPodcast(this.props.podcast);
-    this.setState({ selected: true });
+  getURL = podcast => {
+    var self = this;
+    window.dbx
+      .sharingListSharedLinks({
+        path: podcast.path_lower,
+        direct_only: true
+      })
+      .then(response => {
+        if (response.links.length) {
+          self.setState({
+            streamURL: response.links[0].url.replace(/.$/, "1")
+          });
+        } else {
+          window.dbx
+            .sharingCreateSharedLinkWithSettings({ path: podcast.path_lower })
+            .then(response => {
+              self.setState({
+                streamURL: response.links[0].url.replace(/.$/, "1")
+              });
+            });
+        }
+      });
   };
 
   render() {
     return (
-      <div style={this.podcastStyle} onClick={this.selectPodcast}>
+      <div
+        style={{ backgroundColor: this.props.color }}
+        className="podcast"
+        onClick={this.selectPodcast}
+      >
         <p>{this.props.podcast.name.split(".")[0]}</p>
         <FeatherIcon
           className="clickable"
@@ -45,8 +71,7 @@ const bottom = {
 };
 
 Podcast.propTypes = {
-  podcast: PropTypes.object.isRequired,
-  selectPodcast: PropTypes.func.isRequired
+  podcast: PropTypes.object.isRequired
 };
 
 export default Podcast;
